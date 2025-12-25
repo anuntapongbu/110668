@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        body { background: #f1f2f6; margin: 0; font-family: 'Kanit', sans-serif; padding: 20px; }
+        
+        .card {
+            background: white; border-radius: 20px; padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; margin-bottom: 20px;
+        }
+        h2 { color: #2d3436; margin: 0 0 20px 0; }
+
+        /* ตัวนับเวลา */
+        .timer-grid { display: flex; justify-content: space-around; margin-top: 20px; }
+        .time-box { background: #74b9ff; color: white; padding: 15px; border-radius: 15px; min-width: 60px; }
+        .num { font-size: 1.8rem; font-weight: bold; display: block; }
+        .label { font-size: 0.8rem; opacity: 0.8; }
+
+        /* ปุ่มไป Gallery */
+        .gallery-btn {
+            display: block; width: 100%; padding: 15px; border: none;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            color: white; font-size: 1.2rem; font-weight: bold; border-radius: 15px;
+            cursor: pointer; box-shadow: 0 5px 15px rgba(255, 154, 158, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <img width="100" src="https://no-cdn.shortpixel.ai/client/to_avif,q_lossy,ret_wait/https://shortpixel.com/blog/wp-content/uploads/2023/12/nyan-cat.gif" alt="">
+        <h2> (ระยะเวลาที่ได้ใช้ชีวิตร่วมกันในชื่อแฟน คบกัน)</h2>
+        <div class="timer-grid" id="timer">Loading...</div>
+        <p style="color:#888; margin-top:20px;">(นับทุกวินาทีที่เธอบ่นเค้า 😅)</p>
+    </div>
+
+    <div class="card">
+        <h2>รักนะ ชนินาถ</h2>
+        <p>ไมู่้อะไร (ห้ามด^)</p>
+        <button class="gallery-btn" onclick="window.location.href='gallery.html'">
+            กดเลยยยยยยยยยยยยยยยยยย
+        </button>
+    </div>
+
+    <script>
+        
+        const startDate = new Date(2025,5, 11); 
+
+        function updateTimer() {
+            const now = new Date();
+            const diff = now - startDate;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / 1000 / 60) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            document.getElementById('timer').innerHTML = `
+                <div class="time-box"><span class="num">${days}</span><span class="label">วันที่เค้ารักอ้วน</span></div>
+                <div class="time-box"><span class="num">${hours}</span><span class="label">ชมที่เค้ารักอ้วน.</span></div>
+                <div class="time-box"><span class="num">${minutes}</span><span class="label">นาทีที่เค้ารักอ้วน</span></div>
+                <div class="time-box" style="background:#ff7675"><span class="num">${seconds}</span><span class="label">วิที่เค้ารักอ้วน</span></div>
+            `;
+        }
+        setInterval(updateTimer, 1000); updateTimer();
+    </script>
+</body>
+</html>

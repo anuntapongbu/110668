@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Memories 💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            font-family: 'Kanit', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            animation: fadeInDown 1s ease;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: #ff7675;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        p.subtitle {
+            color: #636e72;
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+
+        .gallery-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            padding: 20px;
+            max-width: 1200px;
+        }
+
+        /* ตัวการ์ด */
+        .card {
+            background-color: transparent;
+            width: 300px;
+            height: 400px;
+            perspective: 1000px;
+            cursor: pointer; /* เปลี่ยนเมาส์เป็นรูปมือ */
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 20px;
+        }
+
+        /* ✨ จุดสำคัญ: เมื่อมีคลาส .flipped ให้หมุนการ์ด */
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .card-front {
+            background-color: #fff;
+        }
+
+        .card-front img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .card-back {
+            background: linear-gradient(to bottom right, #ff9a9e, #fad0c4);
+            color: white;
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .card-back h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .card-back p {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .btn-back {
+            margin: 40px;
+            padding: 12px 30px;
+            background: white;
+            color: #ff7675;
+            border: 2px solid #ff7675;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .btn-back:hover {
+            background: #ff7675;
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 118, 117, 0.4);
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>my love Gallery </h1>
+        <p class="subtitle">แตะที่รูปเพื่ออ่านนะไออ้วน 👇</p>
+    </header>
+
+    <div class="gallery-container">
+        
+        <div class="card" onclick="this.classList.toggle('flipped')">
+            <div class="card-inner">
+                <div class="card-front">
+                    <img src="img/1.jpg" alt="Memory 1">
+                </div>
+                <div class="card-back">
+                    <h3>ความทรงจำที่ 1 ❤️</h3>
+                    <p>"!! วันนี้เราไปกินชาบูกัน เหมือนเดิม เรานอนไม่หลับ55555 น่าจะตื่นเต้นวันนี้เราไปรับมา แล้วก็ไปซื้อโจ๊กมากิน แต่เรากินหมดก่อนแฟนกินช้ามากเลย 555 พอถึงเวลาเราให้แฟนดู GPS แต่แฟนบอกให้เราเลี้ยวด้านหน้าที่จริงๆมันเลี้ยวทางนี้ ขำมากๆ55555 เราไม่เคยกินมาก่อน แฟนน่ารักมากค่อยสอนอะไรด้วย 5555 แต่แฟนให้เราไปเอาน้ำจิ้มแต่เราหาไม่เจอ555 แต่สุดท้ายก็หาเจอ5555 เราไม่ค่อยกล้าพูดเท่าไหร่ เราทำตะเกียบตก แต่ยังดีที่มีแฟน เเฟนเลยบอกพนักงานให้ โครตน่ารักเลย ไม่นั้นเราคงกิน ตะเกียบอันเดียวแน่ๆๆ5555 อาหารอร่อยมาก แฟนรักเราเลยให้กินอันไหม้5555 น่าจะรักมากแหละให้กินหลายชินเลย 555 🌻 "</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" onclick="this.classList.toggle('flipped')">
+            <div class="card-inner">
+                <div class="card-front">
+                    <img src="img/LINE_ALBUM_25122025_251225_2.jpg" alt="Memory 2">
+                </div>
+                <div class="card-back">
+                    <h3>ความทรงจำที่ 2 🌊</h3>
+                    <p>"เราไปเที่ยวด้วยกันครั้งแรก"</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" onclick="this.classList.toggle('flipped')">
+            <div class="card-inner">
+                <div class="card-front">
+                    <img src="img/3.jpg" alt="Memory 3">
+                </div>
+                <div class="card-back">
+                    <h3>ความทรงจำที่ 3 ✨</h3>
+                    <p>"วันนี้แฟนวาดรูปให้น่ารักมาก "</p>
+                </div>
+            </div>
+        </div>
+         <div class="card" onclick="this.classList.toggle('flipped')">
+            <div class="card-inner">
+                <div class="card-front">
+                    <img src="img/785.jpg" alt="Memory 4">
+                </div>
+            
+                <div class="card-back">
+                    <h3>ความทรงจำที่ 4 😢</h3>
+                    <p>" ไปลอยกระทงครั้งแรก"</p>
+                </div>
+            </div>
+        </div>
+<div class="card" onclick="this.classList.toggle('flipped')">
+            <div class="card-inner">
+                <div class="card-front">
+                    <img src="img/778.jpg" alt="Memory 5">
+                </div>
+                <div class="card-back">
+                    <h3>ความทรงจำที่ 5 😢</h3>
+                    <p>"วันนี้วันเกิดไออ้วนนนนนนนนนนนนนนน รักนะจุ๊บๆ "</p>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="card" onclick="this.classList.toggle('flipped')">
+            <div class="card-inner">
+                <div class="card-front">
+                    <img src="img/6.jpg" alt="Memory 5">
+                </div>
+                <div class="card-back">
+                    <h3>ความทรงจำที่ 6 😢</h3>
+                    <p>"ไปคาเฟ่กันครั้งแรก"</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div style="margin-top: 20px; margin-bottom: 50px;">
+        <button onclick="window.location.href='quiz.html'" 
+                style="padding: 15px 30px; background: #ff7675; color: white; border: none; border-radius: 50px; font-size: 1.2rem; cursor: pointer; font-weight: bold; box-shadow: 0 0 15px #ff7675; animation: bounce 2s infinite;">
+           🎮 กดแล้วห้ามผิดนะ ห้ามผิด ชนินาถ 👉
+        </button>
+    </div>
+
+    <style>
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+        40% {transform: translateY(-10px);}
+        60% {transform: translateY(-5px);}
+    }
+    </style>
+
+</body>
+</html>

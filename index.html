@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚠️ SYSTEM COMPROMISED</title>
+    <style>
+        body { background: #000; color: #ff0000; font-family: 'Courier New', monospace; overflow: hidden; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        
+        /* ข้อความ Glitch */
+        .glitch {
+            font-size: 2rem; font-weight: bold; position: relative;
+            text-shadow: 2px 2px #000; animation: glitch 1s infinite linear;
+        }
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        /* รูปที่ซ่อนอยู่ */
+        #hiddenContent { display: none; text-align: center; animation: fadeIn 2s; }
+        img { border: 5px solid #ff0000; max-width: 80%; box-shadow: 0 0 20px #ff0000; }
+        
+        .btn-start {
+            margin-top: 20px; padding: 15px 40px; background: #ff0000; color: #000;
+            border: none; font-weight: bold; font-size: 1.2rem; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px;
+        }
+        .btn-start:hover { background: #fff; box-shadow: 0 0 15px #fff; }
+
+        /* แถบโหลด */
+        .loader { width: 300px; height: 20px; border: 2px solid #ff0000; margin: 20px auto; }
+        .bar { width: 0%; height: 100%; background: #ff0000; transition: width 0.1s; }
+    </style>
+</head>
+<body>
+    <div id="hackScreen">
+        <div class="glitch">⚠️ SECURITY BREACH ⚠️</div>
+        <p>Hacking Target: My Baby's Heart...</p>
+        <div class="loader"><div class="bar" id="progressBar"></div></div>
+        <div id="log" style="font-size: 0.8rem; opacity: 0.7;">Initializing...</div>
+    </div>
+
+    <div id="hiddenContent">
+        <img width="300"  src="img/S__1925123.jpg" alt="Me">
+        <h1>GOTCHA!</h1>
+        <p>คุณชนินาถหนีไปไหนไม่พ้นหรอก...</p>
+        <button class="btn-start" onclick="window.location.href='level2.html'">ยอมจำนนซะ (กด)</button>
+    </div>
+
+    <script>
+        const bar = document.getElementById('progressBar');
+        const log = document.getElementById('log');
+        let width = 0;
+
+        const interval = setInterval(() => {
+            width++;
+            bar.style.width = width + '%';
+            log.innerText = `Decryption: ${width}% complete...`;
+                
+            if (width >= 100) {
+                clearInterval(interval);
+                document.body.style.backgroundColor = '#1a0000'; // เปลี่ยนสีพื้นหลังเล็กน้อย
+                document.getElementById('hackScreen').style.display = 'none';
+                document.getElementById('hiddenContent').style.display = 'block';
+            }
+        }, 80); // ความเร็วโหลด
+    </script>
+</body>
+</html>

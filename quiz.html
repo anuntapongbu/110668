@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เกมทายใจแฟน 💖</title>
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            background-color: #ffe6e6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            color: #d63384;
+        }
+
+        /* เอฟเฟกต์หัวใจลอย */
+        .heart {
+            position: absolute;
+            color: #ff99cc;
+            opacity: 0.5;
+            animation: float 6s linear infinite;
+            font-size: 24px;
+            z-index: 0;
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            z-index: 10;
+            position: relative;
+            border: 2px solid #ffccdd;
+        }
+
+        h1 {
+            color: #ff6699;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .timer-bar {
+            width: 100%;
+            height: 10px;
+            background-color: #eee;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .timer-fill {
+            height: 100%;
+            background-color: #ff6699;
+            width: 100%;
+            transition: width 1s linear;
+        }
+
+        .question {
+            font-size: 1.4em;
+            margin-bottom: 25px;
+            font-weight: bold;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        button {
+            background-color: #fff0f5;
+            border: 2px solid #ffb6c1;
+            padding: 15px;
+            border-radius: 12px;
+            color: #d63384;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #ff6699;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 102, 153, 0.4);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #result-score {
+            font-size: 3em;
+            color: #ff3366;
+            font-weight: bold;
+        }
+
+        .message {
+            margin-top: 15px;
+            font-size: 1.2em;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="hearts-container"></div>
+
+    <div class="container">
+        <div id="start-screen">
+            <h1>💖 เกมวัดใจคุณชนินาถ 💖</h1>
+            <p>มาดูกันว่าไออ้วนรู้ใจเค้าแค่ไหน?</p>
+            <p>มีเวลาข้อละ 10 วินาทีนะ!</p>
+            <p>รีบตอบบบ ห้ามผิดนะจุ้ะ</p>
+            <br>
+            <button onclick="startGame()" style="width: 100%;">เริ่มเกมเลย!</button>
+        </div>
+
+        <div id="quiz-screen" class="hidden">
+            <div class="timer-bar">
+                <div class="timer-fill" id="timer-fill"></div>
+            </div>
+            <div id="question-text" class="question">คำถาม...</div>
+            <div id="options-container" class="options">
+                </div>
+            <p id="question-count" style="margin-top: 20px; color: #aaa; font-size: 0.9em;">ข้อที่ 1/10</p>
+        </div>
+
+        <div id="result-screen" class="hidden">
+            <h1>จบเกมแล้ว! 🎉</h1>
+            <p>คะแนนที่ได้</p>
+            <div id="result-score">0/10</div>
+            <p class="message" id="result-message"></p>
+            <br>
+            <button onclick="location.reload()">เล่นใหม่อีกครั้ง</button>
+        </div>
+    </div>
+
+    <script>
+        // -------------------------------------------------------
+        // ส่วนแก้ไขคำถาม: แก้ตรง text (คำถาม) และ options (ตัวเลือก)
+        // อย่าลืมแก้ correct ให้ตรงกับ index ของคำตอบที่ถูก (เริ่มนับจาก 0)
+        // -------------------------------------------------------
+        const questions = [
+            {
+                text: "วันคบกันของเราคือวันที่เท่าไหร่?",
+                options: ["11 มิถุนายน", "25 ธันวาคม", "1 มกราคม", "ไม่รุ้"],
+                correct: 0 
+            },
+            {
+                text: "สถานที่แรกที่เราเจอกันกันคือที่ไหน?",
+                options: ["โรบินสัน", "สวนสาธารณะ", "คาเฟ", "ม่านรูด"],
+                correct: 0
+            },
+            {
+                text: "สีที่เค้าชอบที่สุดคือสีอะไร?",
+                options: ["ฟ้า", "ชมพู", "ดำ", "เขียว"],
+                correct: 2
+            },
+            {
+                text: "อาหารที่เค้าชอบกินเลยคืออะไร?",
+                options: ["ผัดผัก", "หมูกรอบ", "ก๋วยจั้บ", "หอยดอง"],
+                correct: 2
+            },
+            {
+                text: "ของชิ้นแรกที่เค้าซื้อให้เธอคือ?",
+                options: ["ตุ๊กตา", "นาฬิกา", "เสื้อ", "กระเป๋า"],
+                correct: 3
+            },
+            {
+                text: "เราดูหนังอะไรเรื่องแรก",
+                options: ["ข้างบ้าน", "Lilo & Stitch", "ธี่หยด 3", "ไวกิ้ง"],
+                correct: 1
+            },
+            {
+                text: "เราไปต่างจังหวัดครั้งแรกที่ไหน?",
+                options: ["ไม่รู้", "บุรีรัม", "เชียงใหม่", "เขาใหญ่"],
+                correct: 3
+            },
+            {
+                text: "เวลาว่างเค้าชอบทำอะไรมากที่สุด?",
+                options: ["นอน", "เล่นเกม", "ดูซีรีส์", "ออกกำลังกาย"],
+                correct: 0
+            },
+            {
+                text: "ชื่อเล่นที่เค้าเรียกเธอเวลาอยู่สองคน?",
+                options: ["อ้วน", "ที่รัก", "เหม่ง", "ไอ้ต้าว"],
+                correct: 0
+            },
+            {
+                text: "ใครเป็นคนจีบก่อน?",
+                options: ["เธอไง", "เค้าเอง", "เพื่อนแนะนำ", "มองตาก็รู้ใจ"],
+                correct: 1
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timeLeft = 10;
+        let timerInterval;
+
+        function createHearts() {
+            const container = document.getElementById('hearts-container');
+            for (let i = 0; i < 20; i++) {
+                let heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❤';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                container.appendChild(heart);
+            }
+        }
+
+        function startGame() {
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.remove('hidden');
+            loadQuestion();
+            createHearts();
+        }
+
+        function loadQuestion() {
+            if (currentQuestionIndex >= questions.length) {
+                showResult();
+                return;
+            }
+
+            const q = questions[currentQuestionIndex];
+            document.getElementById('question-text').innerText = q.text;
+            document.getElementById('question-count').innerText = `ข้อที่ ${currentQuestionIndex + 1}/${questions.length}`;
+            
+            const optionsDiv = document.getElementById('options-container');
+            optionsDiv.innerHTML = '';
+
+            q.options.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.innerText = opt;
+                btn.onclick = () => checkAnswer(index);
+                optionsDiv.appendChild(btn);
+            });
+
+            resetTimer();
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            timeLeft = 10;
+            document.getElementById('timer-fill').style.width = '100%';
+            
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                const percent = (timeLeft / 10) * 100;
+                document.getElementById('timer-fill').style.width = percent + '%';
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    checkAnswer(-1); // หมดเวลา = ตอบผิด
+                }
+            }, 1000);
+        }
+
+        function checkAnswer(selectedIndex) {
+            clearInterval(timerInterval);
+            const correctIndex = questions[currentQuestionIndex].correct;
+            
+            if (selectedIndex === correctIndex) {
+                score++;
+            }
+
+            currentQuestionIndex++;
+            // หน่วงเวลานิดนึงก่อนไปข้อถัดไป เพื่อความลื่นไหล
+            setTimeout(loadQuestion, 300);
+        }
+
+        function showResult() {
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+            document.getElementById('result-score').innerText = `${score}/${questions.length}`;
+
+            let msg = "";
+            if (score === 10) msg = "เก่งจังแฟนใครอ่ะ 😘";
+            else if (score >= 7) msg = "ผิดไปเยอะนะไออ้วนนนน 🥰";
+            else if (score >= 4) msg = "ไม่ผ่านนะ 😝";
+            else msg = "งื่ออ จำเค้าไม่ได้หรอ? น้อยใจนะ 🥺";
+            
+            document.getElementById('result-message').innerText = msg;
+        }
+    </script>
+</body>
+</html>
